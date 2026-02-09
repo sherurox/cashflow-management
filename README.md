@@ -116,7 +116,8 @@ FINZ-assignment/
 │   │   └── parsing.py               # CSV normalization & validation
 │   └── main.py                      # FastAPI entrypoint
 ├── ui/
-│   └── app.py                       # Streamlit dashboard
+│   ├── app.py                       # Streamlit dashboard
+│   └── requirements.txt             # Python dependencies
 ├── Bank Transactions - Fully Categorized.csv  # Sample data
 ├── 1.png                            # UI screenshots
 ├── 2.png
@@ -124,8 +125,8 @@ FINZ-assignment/
 ├── 4.png
 ├── 5.png
 ├── docker-compose.yml
-├── requirements.txt
 ├── .env.example
+├── .gitignore
 └── README.md
 ```
 
@@ -194,7 +195,7 @@ python -m pip install --upgrade pip setuptools wheel
 ### 4. Install Python Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install -r ui/requirements.txt
 ```
 
 > **macOS Note:** If you encounter build issues for XGBoost, ensure Xcode Command Line Tools are installed:
