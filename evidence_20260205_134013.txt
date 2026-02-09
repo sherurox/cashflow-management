@@ -1,0 +1,509 @@
+==============================
+Cashflow Forecast Service - Evidence Pack
+==============================
+Timestamp: 
+BASE_URL: http://127.0.0.1:8000
+CSV_PATH: /Users/shreyaskhandale/Documents/FINZ-assignment/Bank Transactions - Fully Categorized.csv
+MONGO_URI: mongodb://localhost:27017
+DB_NAME: cashflow_db
+Collections: raw=raw_files ing=ingestions tx=transactions fc=forecasts kp=knowledge_packages
+
+---- Python / pip ----
+Python 3.9.6
+pip 26.0 from /Users/shreyaskhandale/Documents/FINZ-assignment/.venv/lib/python3.9/site-packages/pip (python 3.9)
+
+---- requirements (pip freeze) ----
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.1
+certifi==2026.1.4
+cffi==2.0.0
+charset-normalizer==3.4.4
+click==8.1.8
+cryptography==46.0.4
+dnspython==2.7.0
+exceptiongroup==1.3.1
+fastapi==0.128.0
+google-ai-generativelanguage==0.6.15
+google-api-core==2.29.0
+google-api-python-client==2.189.0
+google-auth==2.49.0.dev0
+google-auth-httplib2==0.3.0
+google-generativeai==0.8.6
+googleapis-common-protos==1.72.0
+grpcio==1.76.0
+grpcio-status==1.71.2
+h11==0.16.0
+httplib2==0.31.2
+idna==3.11
+joblib==1.5.3
+numpy==2.0.2
+packaging==24.2
+pandas==2.3.3
+pinecone==7.3.0
+pinecone-plugin-assistant==1.8.0
+pinecone-plugin-interface==0.0.7
+proto-plus==1.27.1
+protobuf==5.29.5
+pyasn1==0.6.2
+pyasn1_modules==0.4.2
+pycparser==2.23
+pydantic==2.12.5
+pydantic_core==2.41.5
+pymongo==4.16.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+python-multipart==0.0.20
+pytz==2025.2
+requests==2.32.5
+scikit-learn==1.6.1
+scipy==1.13.1
+shortuuid==1.0.13
+six==1.17.0
+starlette==0.49.3
+threadpoolctl==3.6.0
+tqdm==4.67.3
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2025.3
+uritemplate==4.2.0
+urllib3==2.6.3
+uvicorn==0.39.0
+xgboost==2.1.4
+
+---- 1) POST /cashflow/ingest ----
+ING=NRAvjeDm6DTed657LcZDqe
+
+---- 2) GET /cashflow/ingest/NRAvjeDm6DTed657LcZDqe/status ----
+{
+    "ingestion_id": "NRAvjeDm6DTed657LcZDqe",
+    "filename": "Bank Transactions - Fully Categorized.csv",
+    "status": "completed",
+    "validation_issues": [],
+    "record_counts": {
+        "raw_rows": 460,
+        "parsed_rows": 460,
+        "dropped_rows": 0
+    }
+}
+
+---- 3) GET /cashflow/forecast?ingestion_id=NRAvjeDm6DTed657LcZDqe (13-week totals) ----
+weeks: 13
+PASS ✅ /forecast has 13 weeks + required fields
+
+---- 4) GET /cashflow/forecast/categories?ingestion_id=NRAvjeDm6DTed657LcZDqe ----
+method tags found: ['baseline', 'hybrid_xgb', 'xgboost']
+PASS ✅ category forecast has method tags
+
+---- 5) GET /cashflow/forecast/vendors?ingestion_id=NRAvjeDm6DTed657LcZDqe ----
+PASS ✅ vendors output contains other_vendors
+
+---- 6) GET /cashflow/recurring?ingestion_id=NRAvjeDm6DTed657LcZDqe ----
+{
+    "ingestion_id": "NRAvjeDm6DTed657LcZDqe",
+    "patterns": [
+        {
+            "vendor": "marisol re",
+            "category": "fixed expense",
+            "cadence": "monthly",
+            "median_gap_days": 28.0,
+            "typical_amount_range": [
+                12951.55,
+                20000.0
+            ],
+            "typical_amount_median": 20000.0,
+            "count": 3,
+            "last_seen_date": "2025-09-26",
+            "next_expected_date": "2025-10-24"
+        },
+        {
+            "vendor": "payroll liabilities net payroll",
+            "category": "labor expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                11710.89,
+                12660.31
+            ],
+            "typical_amount_median": 12308.43,
+            "count": 4,
+            "last_seen_date": "2025-08-26",
+            "next_expected_date": "2025-09-02"
+        },
+        {
+            "vendor": "payroll liabilities",
+            "category": "labor expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                4771.39,
+                5202.58
+            ],
+            "typical_amount_median": 5027.63,
+            "count": 4,
+            "last_seen_date": "2025-08-26",
+            "next_expected_date": "2025-09-02"
+        },
+        {
+            "vendor": "orig co name manhattan",
+            "category": "cost of goods sold",
+            "cadence": "biweekly",
+            "median_gap_days": 14.0,
+            "typical_amount_range": [
+                2163.03,
+                4747.18
+            ],
+            "typical_amount_median": 3551.65,
+            "count": 4,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-11"
+        },
+        {
+            "vendor": "orig co name baldor",
+            "category": "cost of goods sold",
+            "cadence": "biweekly",
+            "median_gap_days": 13.5,
+            "typical_amount_range": [
+                1725.98,
+                2592.14
+            ],
+            "typical_amount_median": 2226.63,
+            "count": 5,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-11"
+        },
+        {
+            "vendor": "orig co name woolco",
+            "category": "cost of goods sold",
+            "cadence": "biweekly",
+            "median_gap_days": 13.0,
+            "typical_amount_range": [
+                1996.29,
+                2335.63
+            ],
+            "typical_amount_median": 2182.94,
+            "count": 5,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-10"
+        },
+        {
+            "vendor": "orig co name empire",
+            "category": "cost of goods sold",
+            "cadence": "biweekly",
+            "median_gap_days": 14.0,
+            "typical_amount_range": [
+                1091.26,
+                2037.2
+            ],
+            "typical_amount_median": 1363.22,
+            "count": 4,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-11"
+        },
+        {
+            "vendor": "orig co name union",
+            "category": "cost of goods sold",
+            "cadence": "biweekly",
+            "median_gap_days": 13.0,
+            "typical_amount_range": [
+                1274.33,
+                1727.53
+            ],
+            "typical_amount_median": 1312.46,
+            "count": 5,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-10"
+        },
+        {
+            "vendor": "orig co name mr",
+            "category": "other expense",
+            "cadence": "biweekly",
+            "median_gap_days": 12.5,
+            "typical_amount_range": [
+                1000.39,
+                1000.39
+            ],
+            "typical_amount_median": 1000.39,
+            "count": 3,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-09"
+        },
+        {
+            "vendor": "music entertainment navigator entertainment",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                700.0,
+                700.0
+            ],
+            "typical_amount_median": 700.0,
+            "count": 4,
+            "last_seen_date": "2025-09-29",
+            "next_expected_date": "2025-10-06"
+        },
+        {
+            "vendor": "zelle payment to nav",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                700.0,
+                700.0
+            ],
+            "typical_amount_median": 700.0,
+            "count": 4,
+            "last_seen_date": "2025-10-26",
+            "next_expected_date": "2025-11-02"
+        },
+        {
+            "vendor": "spi directv service",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                499.99,
+                499.99
+            ],
+            "typical_amount_median": 499.99,
+            "count": 3,
+            "last_seen_date": "2025-10-14",
+            "next_expected_date": "2025-11-13"
+        },
+        {
+            "vendor": "music and entertainment navigator",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                350.0,
+                437.5
+            ],
+            "typical_amount_median": 350.0,
+            "count": 4,
+            "last_seen_date": "2025-08-25",
+            "next_expected_date": "2025-09-01"
+        },
+        {
+            "vendor": "orig co name seated",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                269.76,
+                347.19
+            ],
+            "typical_amount_median": 335.49,
+            "count": 9,
+            "last_seen_date": "2025-10-31",
+            "next_expected_date": "2025-11-07"
+        },
+        {
+            "vendor": "denver digital agency",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                320.0,
+                320.0
+            ],
+            "typical_amount_median": 320.0,
+            "count": 3,
+            "last_seen_date": "2025-10-21",
+            "next_expected_date": "2025-11-20"
+        },
+        {
+            "vendor": "yelp inc 412-235-4324",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                271.1,
+                271.1
+            ],
+            "typical_amount_median": 271.1,
+            "count": 3,
+            "last_seen_date": "2025-10-01",
+            "next_expected_date": "2025-10-31"
+        },
+        {
+            "vendor": "spectrum",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                229.97,
+                229.97
+            ],
+            "typical_amount_median": 229.97,
+            "count": 3,
+            "last_seen_date": "2025-10-31",
+            "next_expected_date": "2025-11-30"
+        },
+        {
+            "vendor": "extra space 0331",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                209.32,
+                209.32
+            ],
+            "typical_amount_median": 209.32,
+            "count": 3,
+            "last_seen_date": "2025-10-27",
+            "next_expected_date": "2025-11-26"
+        },
+        {
+            "vendor": "advertising and promotion chair",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                165.82,
+                194.67
+            ],
+            "typical_amount_median": 169.59,
+            "count": 3,
+            "last_seen_date": "2025-08-22",
+            "next_expected_date": "2025-08-29"
+        },
+        {
+            "vendor": "insurance expense",
+            "category": "labor expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                153.62,
+                165.62
+            ],
+            "typical_amount_median": 159.05,
+            "count": 4,
+            "last_seen_date": "2025-08-27",
+            "next_expected_date": "2025-09-03"
+        },
+        {
+            "vendor": "music and entertainment alex",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                150.0,
+                150.0
+            ],
+            "typical_amount_median": 150.0,
+            "count": 4,
+            "last_seen_date": "2025-08-25",
+            "next_expected_date": "2025-09-01"
+        },
+        {
+            "vendor": "music and entertainment dave",
+            "category": "other expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                150.0,
+                150.0
+            ],
+            "typical_amount_median": 150.0,
+            "count": 4,
+            "last_seen_date": "2025-08-25",
+            "next_expected_date": "2025-09-01"
+        },
+        {
+            "vendor": "intuit qbooks live",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                140.66,
+                140.66
+            ],
+            "typical_amount_median": 140.66,
+            "count": 3,
+            "last_seen_date": "2025-10-01",
+            "next_expected_date": "2025-10-31"
+        },
+        {
+            "vendor": "payroll processing fees",
+            "category": "labor expense",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                72.98,
+                74.25
+            ],
+            "typical_amount_median": 72.98,
+            "count": 5,
+            "last_seen_date": "2025-08-29",
+            "next_expected_date": "2025-09-05"
+        },
+        {
+            "vendor": "tagvenue com",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.0,
+            "typical_amount_range": [
+                46.76,
+                77.85
+            ],
+            "typical_amount_median": 63.5,
+            "count": 3,
+            "last_seen_date": "2025-10-01",
+            "next_expected_date": "2025-10-31"
+        },
+        {
+            "vendor": "balthazar bakery",
+            "category": "cost of goods sold",
+            "cadence": "weekly",
+            "median_gap_days": 7.0,
+            "typical_amount_range": [
+                44.0,
+                152.0
+            ],
+            "typical_amount_median": 44.0,
+            "count": 13,
+            "last_seen_date": "2025-10-28",
+            "next_expected_date": "2025-11-04"
+        },
+        {
+            "vendor": "spotify usa",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                11.99,
+                11.99
+            ],
+            "typical_amount_median": 11.99,
+            "count": 3,
+            "last_seen_date": "2025-10-25",
+            "next_expected_date": "2025-11-24"
+        },
+        {
+            "vendor": "google google one",
+            "category": "other expense",
+            "cadence": "monthly",
+            "median_gap_days": 30.5,
+            "typical_amount_range": [
+                3.25,
+                3.25
+            ],
+            "typical_amount_median": 3.25,
+            "count": 3,
+            "last_seen_date": "2025-10-05",
+            "next_expected_date": "2025-11-04"
+        }
+    ]
+}
+
+---- 7) POST /cashflow/qa ----
+has_answer: True
+supporting_records: 6
+PASS ✅ QA returned answer + supporting_records
+
+---- 8) Consistency checks (net_cash == inflow - outflow) ----
+PASS ✅ net_cash reconciliation OK for all weeks
+
+---- 9) Mongo traceability checks (raw + txns + artifacts) ----
