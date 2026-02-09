@@ -118,11 +118,18 @@ FINZ-assignment/
 ├── ui/
 │   └── app.py                       # Streamlit dashboard
 ├── Bank Transactions - Fully Categorized.csv  # Sample data
+├── 1.png                            # UI screenshots
+├── 2.png
+├── 3.png
+├── 4.png
+├── 5.png
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .env.example
 └── README.md
 ```
+
+> **Note:** UI screenshots (1.png - 5.png) are located in the repository root. See the [Screenshots section](#-screenshots--ui-walkthrough) below for detailed UI walkthrough.
 
 ## 📦 Sample Data
 
@@ -270,16 +277,40 @@ UI runs at: **http://localhost:8501**
 - JSON body: `ingestion_id`, `question`, `top_k`
 - Returns: `answer` + `supporting_records`
 
-## 📸 Screenshots
+## 📸 Screenshots / UI Walkthrough
 
-### Dashboard Overview
-_[Add screenshot after ingest]_
+### 1. CSV Upload & Ingestion
+![Upload and Ingestion](1.png)
 
-### QC Dashboard
-_[Add screenshot showing forecast metrics]_
+**Upload & ingestion of CSV with starting balance and initialization of QC.** The interface allows users to upload historical transaction data and set an initial bank balance to begin the forecasting process.
 
-### Q&A Interface
-_[Add screenshot of grounded Q&A]_
+---
+
+### 2. Ingestion Status & QC Validation
+![Ingestion Status and QC Metrics](2.png)
+
+**Ingestion status and QC validation metrics (historical min, forecast min, anomaly warnings).** The system displays comprehensive validation results including minimum balance thresholds and automated anomaly detection across the forecast horizon.
+
+---
+
+### 3. Deferral Summary & Liquidity Analysis
+![Deferral Summary](3.png)
+
+**Deferral summary showing weeks with deferral, max payables queue, and liquidity stress.** Critical insights into cash shortfall periods, peak deferred obligations, and liquidity risk indicators help identify potential cash constraints.
+
+---
+
+### 4. Forecast Visualization & Analytics
+![Forecast Charts](4.png)
+
+**Forecast charts including ending balance, payables queue growth, inflow vs outflow, and paid vs deferred outflow.** Interactive visualizations provide a comprehensive view of projected cash positions, payment capabilities, and the accumulation of deferred obligations over the 13-week forecast period.
+
+---
+
+### 5. Grounded Q&A with RAG
+![Grounded Q&A Interface](5.png)
+
+**Grounded Q&A over forecast data with traceability to supporting records.** Natural language queries are answered using retrieval-augmented generation, with responses strictly grounded in actual forecast data and supporting evidence displayed for full auditability.
 
 ## 🎓 Why This Project Matters
 
